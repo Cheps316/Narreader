@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodybite_app/screens/create-new-account.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/screens.dart';
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Foodybite',
+      title: 'Narreader',
       theme: ThemeData(
         textTheme:
             GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
@@ -21,7 +22,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LoginScreen(),
-        'ForgotPassword': (context) => ForgotPassword(),
         'CreateNewAccount': (context) => CreateNewAccount(),
       },
     );

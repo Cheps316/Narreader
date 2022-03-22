@@ -6,47 +6,43 @@ import '../widgets/widgets.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        BackgroundImage(
-          image: 'assets/images/login_bg.png',
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
+    return Scaffold(
+      backgroundColor: Colors.black,
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 150.0, horizontal: 24.0),
+          child: Column(
             children: [
-              Flexible(
-                child: Center(
-                  child: Text(
-                    'Foodybite',
-                    style: TextStyle(
-                        color: Colors.white,
+            Container(
+              child: Center(
+                child: Text(
+                    'Login',
+                  style: TextStyle(
+                      color: Colors.white,
                         fontSize: 60,
                         fontWeight: FontWeight.bold),
                   ),
+                 
                 ),
+                       decoration: BoxDecoration(
+                        border:
+                          Border(bottom: BorderSide( width: 2, color: kWhite))),
               ),
-              Column(
+              Container(
+                padding: const EdgeInsets.only(top: 60.0),
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
+                children: <Widget>[
                   TextInputField(
                     icon: FontAwesomeIcons.envelope,
                     hint: 'Email',
                     inputType: TextInputType.emailAddress,
-                    inputAction: TextInputAction.next,
                   ),
                   PasswordInput(
                     icon: FontAwesomeIcons.lock,
                     hint: 'Password',
-                    inputAction: TextInputAction.done,
+              
                   ),
-                  GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, 'ForgotPassword'),
-                    child: Text(
-                      'Forgot Password',
-                      style: kBodyText,
-                    ),
-                  ),
+             
                   SizedBox(
                     height: 25,
                   ),
@@ -55,10 +51,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 25,
-                  ),
-                ],
-              ),
-              GestureDetector(
+                  ),GestureDetector(
                 onTap: () => Navigator.pushNamed(context, 'CreateNewAccount'),
                 child: Container(
                   child: Text(
@@ -73,10 +66,12 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-            ],
+                ],
+              ),
+              ),
+              ]
+              )
           ),
-        )
-      ],
-    );
+              );      
   }
 }
