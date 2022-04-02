@@ -1,9 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:foodybite_app/screens/create-new-account.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import 'screens/create-new-account.dart';
 import 'screens/screens.dart';
 
-void main() {
+
+Future main() async {
+ WidgetsFlutterBinding.ensureInitialized ();
+  await Firebase.initializeApp();
+  
   runApp(MyApp());
 }
 
@@ -19,11 +24,23 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginScreen(),
-        'CreateNewAccount': (context) => CreateNewAccount(),
-      },
+      // initialRoute: '/',
+      // // routes: {
+      // //   '/': (context) => LoginScreen(),
+      //   // 'CreateNewAccount': (context) => CreateNewAccount(),
+      // },
+    home: LoginScreen(),
+    );
+  }
+}
+
+class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({ Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
     );
   }
 }

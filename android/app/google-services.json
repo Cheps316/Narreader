@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "607657134125",
+    "project_id": "narreader-9a604",
+    "storage_bucket": "narreader-9a604.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607657134125:android:71781df5a015765d3590a4",
+        "android_client_info": {
+          "package_name": "com.example.Narreader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607657134125-d7hd66ck636paidrugi028d9adptk255.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.Narreader",
+            "certificate_hash": "51601f268f0f2506de3d5f88ffdee82ddcb82947"
+          }
+        },
+        {
+          "client_id": "607657134125-0jd1utpn9n67jrsf6rl7mok5nc370inp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYKm2cYNwZcB5luWOaZ6uinNGvv2NwDVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607657134125-0jd1utpn9n67jrsf6rl7mok5nc370inp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
