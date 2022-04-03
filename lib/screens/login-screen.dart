@@ -20,7 +20,48 @@ class _LoginScreenState extends State<LoginScreen> {
   //Firebase
   final _auth = FirebaseAuth.instance;
 
+  var email = "";
+  var password ="";
 
+userLogin() async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print("No User Found for that Email");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.white,
+            content: Text(
+              "No User Found for that Email",
+              style: TextStyle(fontSize: 18.0, color: Colors.red),
+                 textAlign:TextAlign.center,
+            ),
+          ),
+        );
+      } else if (e.code == 'wrong-password') {
+        print("Wrong Password Provided by User");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.white,
+            content: Text(
+              "Wrong Password Provided by User",
+              style: TextStyle(fontSize: 18.0, color: Colors.red),
+                textAlign:TextAlign.center,
+            ),
+          ),
+        );
+      }
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
@@ -94,15 +135,20 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(20),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-            signIn(emailController.text, passwordController.text);
-          },
+            if (_formkey.currentState!.validate()) {
+                          setState(() {
+                            email = emailController.text;
+                            password = passwordController.text;
+                          });
+                          userLogin();// signIn(emailController.text, passwordController.text);
+          }},
           child: Text("Login",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 25,
                   color: Colors.black,
-                  fontWeight: FontWeight.bold)),
-        ));
+                  fontWeight: FontWeight.bold))
+          ));
     return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
@@ -171,12 +217,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Fluttertoast.showToast(msg: "Login Successful"),
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => HomeScreen())),
-              })
-          .catchError((e) {
-        Fluttertoast.showToast(msg: e.message);
-      });
-    }
+              });
+
   }
-}
 
-
+  }}

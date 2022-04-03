@@ -26,6 +26,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
      final fullNameField = TextFormField(
@@ -116,12 +117,12 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: Colors.blue,
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-           signUp(emailEditingController.text, passwordEditingController.text);
+           signUp(emailEditingController.text, passwordEditingController.text, fullNameEditingController.text);
            },
           child: Text(
             "SignUp",
@@ -137,9 +138,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.red),
+          icon: Icon(Icons.arrow_back, color: Colors.blue),
           onPressed: () {
-            signUp(emailEditingController.text, passwordEditingController.text);
+            signUp(emailEditingController.text, passwordEditingController.text, fullNameEditingController.text);
             // passing this to our root
             Navigator.of(context).pop();
           },
@@ -156,7 +157,19 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[        
+                  children: <Widget>[     
+                      SizedBox(
+                              height: 90,
+                              child: Center(
+                                child: Text(
+                                  'Narreader',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 60,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),   
                     SizedBox(height: 45),
                     fullNameField,
                     SizedBox(height: 20),
@@ -176,41 +189,51 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
       ),
     );
   }
-void signUp(String email, String password) async {
+void signUp(String email, String password, String fullName) async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
-            .createUserWithEmailAndPassword(email: email, password: password)
+            .createUserWithEmailAndPassword(email: email, password: password,)
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {
           Fluttertoast.showToast(msg: e!.message);
         });
-      } on FirebaseAuthException catch (error) {
-        switch (error.code) {
-          case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
-            break;
-          case "wrong-password":
-            errorMessage = "Your password is wrong.";
-            break;
-          case "user-not-found":
-            errorMessage = "User with this email doesn't exist.";
-            break;
-          case "user-disabled":
-            errorMessage = "User with this email has been disabled.";
-            break;
-          case "too-many-requests":
-            errorMessage = "Too many requests";
-            break;
-          case "operation-not-allowed":
-            errorMessage = "Signing in with Email and Password is not enabled.";
-            break;
-          default:
-            errorMessage = "An undefined Error happened.";
+      } on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+          print("Password Provided is too Weak");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+
+              content: Text(
+                "Password Provided is too Weak",
+                style: TextStyle(fontSize: 18.0, color: Colors.black),
+              ),
+            ),
+          );
+        } else if (e.code == 'email-already-in-use') {
+          print("Account Already exists");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "Account Already exists",
+                style: TextStyle(fontSize: 18.0, color: Colors.black),
+              ),
+            ),
+          );
         }
-        Fluttertoast.showToast(msg: errorMessage!);
-        print(error.code);
       }
+    } else {
+      print("");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.white,
+          content: Text(
+            "Error Occured",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16.0, color: Colors.red, ),
+          ),
+        ),
+      );
     }
   }
   postDetailsToFirestore() async {
