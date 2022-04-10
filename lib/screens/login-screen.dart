@@ -1,5 +1,5 @@
-import 'package:Narreader_app/screens/create-new-account.dart';
-import 'package:Narreader_app/screens/home.dart';
+import 'package:narreader_app/screens/create-new-account.dart';
+import 'package:narreader_app/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
