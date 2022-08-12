@@ -1,6 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:narreader_app/provider/bookmark_provider.dart';
+import 'package:narreader_app/screens/products_categories.dart';
+import 'package:narreader_app/screens/products_details.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/login-screen.dart';
 
@@ -16,7 +21,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers:[
+        ChangeNotifierProvider<BookmarkProvider>(create: (context)=>BookmarkProvider(),)
+      ],child:GetMaterialApp(
       title: 'Narreader',
       theme: ThemeData(
         textTheme:
@@ -24,23 +32,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // initialRoute: '/',
-      // // routes: {
-      // //   '/': (context) => LoginScreen(),
-      //   // 'CreateNewAccount': (context) => CreateNewAccount(),
-      // },
+      initialRoute: '/',
+      routes: {
+        ProductsCategories.id :(context)=>  ProductsCategories(),
+        ProductsDetailsPage.id:(context)=> ProductsDetailsPage()
+      },
     home: LoginScreen(),
-    );
-  }
-}
-
-class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({ Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
-    );
+    ));
   }
 }

@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:narreader_app/screens/create-new-account.dart';
 import 'package:narreader_app/screens/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -22,11 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   var email = "";
   var password ="";
+  var uid;
 
 userLogin() async {
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+          .signInWithEmailAndPassword(email: email, password: password,);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -35,7 +36,6 @@ userLogin() async {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print("No User Found for that Email");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.white,
@@ -47,7 +47,6 @@ userLogin() async {
           ),
         );
       } else if (e.code == 'wrong-password') {
-        print("Wrong Password Provided by User");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.white,
@@ -212,12 +211,14 @@ userLogin() async {
   void signIn(String email, String password) async {
     if (_formkey.currentState!.validate()) {
       await _auth
-          .signInWithEmailAndPassword(email: email, password: password)
+          .signInWithEmailAndPassword(email: email, password: password)   
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successful"),
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => HomeScreen())),
               });
+              print(UserCredential);
+              // uid= UserCredential.user!.uid;
 
   }
 
