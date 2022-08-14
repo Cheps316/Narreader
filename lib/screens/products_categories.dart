@@ -67,6 +67,7 @@ class _ProductsCategoriesState extends State<ProductsCategories> {
                                "productdescription": values[index]['product_description'],
                                "productupload": values[index]['product_upload_date'],
                                "productaudio": values[index]['product_audio'],
+                               "productwrittenby": values[index]['product_writtenby'],
                         },);},
              child: Container(
                         

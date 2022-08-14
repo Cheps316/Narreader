@@ -4,6 +4,9 @@ import 'package:narreader_app/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'forgetpasswordd.dart';
+
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -22,18 +25,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
   var email = "";
   var password ="";
-  var uid;
+  var roles;
 
 userLogin() async {
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password,);
-      Navigator.pushReplacement(
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid){
+            Fluttertoast.showToast(msg: "Login Successful");
+          if (roles=="admin") {
+              Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => HomeScreen(),
         ),
       );
+          } else {  Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(),
+        ),
+      );
+          }}
+          );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -139,7 +153,8 @@ userLogin() async {
                             email = emailController.text;
                             password = passwordController.text;
                           });
-                          userLogin();// signIn(emailController.text, passwordController.text);
+                          userLogin();
+                          // signIn(emailController.text, passwordController.text);
           }},
           child: Text("Login",
               textAlign: TextAlign.center,
@@ -178,7 +193,25 @@ userLogin() async {
                             emailField,
                             SizedBox(height: 30),
                             passwordField,
-                            SizedBox(height: 30),
+                             SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  GestureDetector(
+                                      onTap: () => Navigator.push(
+                                        context,MaterialPageRoute(
+                                          builder: (context) =>ForgotPassword()
+                                          )
+                                          ),
+                                      child: Text(
+                                        "Forgot Password ?",
+                                        style: TextStyle(
+                                            color: Colors.redAccent,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15),
+                                      )),
+                                ]),
+                         SizedBox(height: 10),
                             loginButton,
                             SizedBox(height: 10),
                             Row(
@@ -208,18 +241,19 @@ userLogin() async {
   }
 
 //Login Function
-  void signIn(String email, String password) async {
-    if (_formkey.currentState!.validate()) {
-      await _auth
-          .signInWithEmailAndPassword(email: email, password: password)   
-          .then((uid) => {
-                Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen())),
-              });
-              print(UserCredential);
-              // uid= UserCredential.user!.uid;
+  // void signIn(String email, String password) async {
+  //   if (_formkey.currentState!.validate()) {
+  //     await _auth
+  //         .signInWithEmailAndPassword(email: email, password: password)   
+  //         .then((uid) => {
+  //               Fluttertoast.showToast(msg: "Login Successful"),
+  //               Navigator.push(context,
+  //                   MaterialPageRoute(builder: (context) => AdminHomeScreen())),
+  //             });
+  //             print(UserCredential);
+  //             // uid= UserCredential.user!.uid;
 
+  // }
+
+  // }
   }
-
-  }}

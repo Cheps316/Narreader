@@ -38,12 +38,11 @@ class _ProductsDetailsPageState extends State<ProductsDetailsPage> {
      BookmarkProvider bookmarkProvider = Provider.of(context);
     final data = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
     var name = data['productname'];
-    var category = data['productcategory'];
     var image = data['productimage'];
     var pdf = data['productpdf'];
     var description = data['productdescription'];
-    var uploaddate = data['productuploaddate'];
     var audio = data['productaudio'];
+    var writtenby=data['productwrittenby'];
     var productid=data['productid'];
 
     return Scaffold(
@@ -97,28 +96,54 @@ class _ProductsDetailsPageState extends State<ProductsDetailsPage> {
                        Padding(
                 padding: const EdgeInsets.all(8.0),
               ),
+              
               Container(
                 width: double.infinity,
-                height: 200,
+                height: 250,
                 
                decoration: BoxDecoration(
                 color:  Colors.grey.withOpacity(0.2)
+               ), 
+               child: Column(
+                 children: [
+                  Row(
+                    children: [
+                      Text("Written by : " +writtenby,style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
+                    ],
+                  ),
+                   Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Row(
+                       children: [
+                         Text(description,style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
+                       ],
+                     ),
+                   ),
+                 ],
                ),
-
-               child: Text(description,style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
               )
+            
                     ],
                   ),
                 ),
               ),
+              
               MaterialButton(
                 minWidth: double.infinity,
                 onPressed: (() {
                 Navigator.push(context, 
-                MaterialPageRoute(builder: ((context) => View(file: pdf,))));
+                MaterialPageRoute(builder: ((context) => View(file: pdf,fileaudio:audio))));
               }),
               child: Text("Read"),
                 color: Colors.blue),
+              //    MaterialButton(
+              //   minWidth: double.infinity,
+              //   onPressed: (() {
+              //   Navigator.push(context, 
+              //   MaterialPageRoute(builder: ((context) => (file: pdf,fileaudio:audio))));
+              // }),
+              // child: Text("Listen"),
+              //   color: Colors.blue),
             ],
           ),
         ),

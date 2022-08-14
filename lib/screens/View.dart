@@ -1,6 +1,5 @@
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:narreader_app/screens/audio_player.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -8,6 +7,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 class View extends StatefulWidget {
   final file;
   final fileaudio;
+ 
   View({this.file,this.fileaudio});
 
   @override
@@ -16,6 +16,7 @@ class View extends StatefulWidget {
 
 class _ViewState extends State<View> {
 
+
   _ViewState(this.file,this.fileaudio);
   final file;
   final fileaudio;
@@ -23,15 +24,16 @@ class _ViewState extends State<View> {
   late AudioPlayer advancedPlayer;
 
   @override
+ 
   void initState(){
     super.initState();
     advancedPlayer = AudioPlayer();
   }
   Widget build(BuildContext context) {
-    final double screenHeight=MediaQuery.of(context).size.height;
+
 final double screenWidth=MediaQuery.of(context).size.width;
     return Scaffold(appBar: AppBar(
-      title: Text("PDF",textAlign: TextAlign.center),
+      title: Text("pdf",textAlign: TextAlign.center),
 
     ),
       body:
@@ -46,28 +48,20 @@ final double screenWidth=MediaQuery.of(context).size.width;
         ),
      
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(2.0),
           child: Container(
             height: 200,
+    
             width: screenWidth,
              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
+                borderRadius: BorderRadius.circular(30),
                 color: Colors.transparent,
-                
           ),
-            // child:AudioFile(advancedPlayer: advancedPlayer)
+            child:AudioFile(advancedPlayer: advancedPlayer,audiopath:fileaudio)
             ),
         )
         ],
       ),
-
-      floatingActionButton: FloatingActionButton(
-      onPressed: (() {
-        fileaudio;
-      }),
-      child: Icon(Icons.play_arrow), 
-      
-    )
     );   
   }
 }

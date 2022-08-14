@@ -30,8 +30,10 @@ class _AddProductState extends State<AddProduct> {
   Map<String, dynamic> productData = {
     "p_name": "",
     "p_upload_date": DateTime.now().millisecondsSinceEpoch,
-    "p_product_description":"",
+    "p_description":"",
     "p_category":"",
+    "p_uploader":"",
+    "p_productid":"",
   };
   
   void _pickedImage(File image) {
@@ -153,6 +155,25 @@ class _AddProductState extends State<AddProduct> {
                 
                   ),
                    SizedBox(
+                  height: 30,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    labelText: 'Written By',
+                  ),
+                  
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Writer's name Required";
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    productData['p_uploader'] = value!;
+                  },
+                ),
+ SizedBox(
                   height: 30,
                 ),
                 DropdownButtonFormField<String>(

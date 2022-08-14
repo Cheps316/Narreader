@@ -8,6 +8,7 @@ import 'package:narreader_app/controller/data_controller.dart';
 import 'package:narreader_app/screens/drawer.dart';
 
 
+import 'Screenpage.dart';
 import 'add-product.dart';
 import 'products_details.dart';
 
@@ -20,8 +21,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+
   final DataController controller = Get.put(DataController());
    FirebaseFirestore db = FirebaseFirestore.instance;
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-          title: Text("Home Page"),
+          title: Center(child: Text("Narreader"),),
           actions: [
-            IconButton(onPressed: (){}, icon: Icon(Icons.search))
+            IconButton(onPressed: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => SearchPage())),
+              icon: const Icon(Icons.search))
           ],
         ),
       
@@ -74,6 +79,7 @@ StreamBuilder(
                                "productupload": values[index]['product_upload_date'],
                                "productaudio": values[index]['product_audio'],
                                "productid":values[index]["product_id"],
+                               "productwrittenby":values[index]["product_writtenby"]
                         },);},
              child: Container(
                         
@@ -122,7 +128,9 @@ StreamBuilder(
                             )
                             )
                             ]
-                            )
+                            ),
+                            
+                            
                             )
                             )
                             )
@@ -147,7 +155,6 @@ StreamBuilder(
 }
 
 }
-
 
 // class View extends StatefulWidget {
 //  final file;

@@ -1,13 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:narreader_app/controller/data_controller.dart';
-import 'package:narreader_app/screens/bookmarks.dart';
+import 'package:narreader_app/model/user_model.dart';
+import 'package:narreader_app/screens/category.dart';
 
+import 'bookmarks.dart';
+import 'login-screen.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
  
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
  final DataController controller = Get.find();
 
+ User? user = FirebaseAuth.instance.currentUser;
+ UserModel loggedInUser = UserModel();
+
+@override
+void initState(){
+ super.initState();
+ FirebaseFirestore.instance
+     .collection("users")
+     .doc(user!.uid)
+     .get()
+     .then((value){
+   this.loggedInUser=UserModel.fromMap(value.data());
+   setState((){});
+ });
+}
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,13 +49,13 @@ class AppDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                       'User : ${controller.userProfileData['fullName']}',
+                       'User : ${loggedInUser.name}',
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     FittedBox(
                       child: Text(
-                        'Email : ${controller.userProfileData['email']}',
+                        'Email : ${loggedInUser.email}',
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       ),
@@ -40,18 +65,20 @@ class AppDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(Icons.person),
-                title: const Text('Your Product'),
+                title: const Text('Categories'),
                 onTap: () {
                 Get.back();
-                Get.to(()=> Bookmarks());
+                Get.to(()=> Categories());
                   
                 },
               ),
+             
               ListTile(
                 leading: Icon(Icons.logout),
                 title: const Text('LogOut'),
                 onTap: () {
-                  
+                  Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()));
                 },
               ),
             ],

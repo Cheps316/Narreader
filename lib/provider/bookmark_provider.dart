@@ -45,7 +45,8 @@ getFavorite()async{
             productdescription: element.get("bookmarkdescription"),
              productcategory: element.get("bookmarkcategory"),
              productaudio: element.get("bookmarkaudio"),
-              productid: element.get("bookmarkid")
+              productid: element.get("bookmarkid"),
+              productuploader: element.get("bookmarkwrittenby")
               );
                newList.add(product);
     },);

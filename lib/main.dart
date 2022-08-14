@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       providers:[
         ChangeNotifierProvider<BookmarkProvider>(create: (context)=>BookmarkProvider(),)
       ],child:GetMaterialApp(
+        debugShowCheckedModeBanner: false,
       title: 'Narreader',
       theme: ThemeData(
         textTheme:
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         ProductsCategories.id :(context)=>  ProductsCategories(),
-        ProductsDetailsPage.id:(context)=> ProductsDetailsPage()
+        ProductsDetailsPage.id:(context)=> ProductsDetailsPage(),
       },
     home: LoginScreen(),
     ));

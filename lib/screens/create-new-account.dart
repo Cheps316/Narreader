@@ -22,16 +22,16 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
   
   final _formKey = GlobalKey<FormState>();
 
-  final fullNameEditingController = new TextEditingController();
+  final nameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-     final fullNameField = TextFormField(
+     final nameField = TextFormField(
         autofocus: false,
-        controller: fullNameEditingController,
+        controller: nameEditingController,
         keyboardType: TextInputType.name,
         validator: (value) {
           RegExp regex = new RegExp(r'^.{3,}$');
@@ -44,7 +44,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
           return null;
         },
         onSaved: (value) {
-          fullNameEditingController.text = value!;
+          nameEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -74,7 +74,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
           return null;
         },
         onSaved: (value) {
-          fullNameEditingController.text = value!;
+          emailEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -101,7 +101,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
           }
         },
         onSaved: (value) {
-          fullNameEditingController.text = value!;
+          passwordEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -122,7 +122,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-           signUp(emailEditingController.text, passwordEditingController.text, fullNameEditingController.text);
+           signUp(emailEditingController.text, passwordEditingController.text, nameEditingController.text);
            },
           child: Text(
             "SignUp",
@@ -140,7 +140,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.blue),
           onPressed: () {
-            signUp(emailEditingController.text, passwordEditingController.text, fullNameEditingController.text);
+            signUp(emailEditingController.text, passwordEditingController.text, nameEditingController.text);
             // passing this to our root
             Navigator.of(context).pop();
           },
@@ -171,7 +171,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                               ),
                             ),   
                     SizedBox(height: 45),
-                    fullNameField,
+                    nameField,
                     SizedBox(height: 20),
                     emailField,
                     SizedBox(height: 20),
@@ -189,11 +189,11 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
       ),
     );
   }
-void signUp(String email, String password, String fullName) async {
+void signUp(String email, String password, String name) async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
-            .createUserWithEmailAndPassword(email: email, password: password,)
+            .createUserWithEmailAndPassword(email: email, password: password)
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {
           Fluttertoast.showToast(msg: e!.message);
@@ -243,13 +243,14 @@ void signUp(String email, String password, String fullName) async {
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
-
+    
     UserModel userModel = UserModel();
 
     // writing all the values
     userModel.email = user!.email;
     userModel.uid = user.uid;
-    userModel.fullName = fullNameEditingController.text;
+    userModel.name = nameEditingController.text;
+    userModel.roles="users";
 
     await firebaseFirestore
         .collection("users")

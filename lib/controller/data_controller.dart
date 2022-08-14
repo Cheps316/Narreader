@@ -13,45 +13,23 @@ import 'comman_dialog.dart';
 
 class DataController extends GetxController {
 
-  var productid ;
+ 
   final firebaseInstance = FirebaseFirestore.instance;
-  Map userProfileData = {'fullName': '', 'email': ''};
 
   List<Product> allProduct =[];
    
-  UserModel userModel =UserModel();
+
 
   void onReady() {
     super.onReady();
     getAllProduct();
-    getUserProfileData();
-  }
-
-// Method for get User profile
-
-Future<void> getUserProfileData() async {
-    try {
-      var response = await firebaseInstance
-          .collection('users')
-          .where('uid', isEqualTo: userModel.uid)
-          .get();
-      response.docs.forEach((response) {
-        print(response.data());
-      });
-      if (response.docs.length > 0) {
-        userProfileData['fullName'] = response.docs[2]['fullName'];
-        userProfileData['email'] = response.docs[0]['email'];
-      }
-      print(userProfileData);
-    } on FirebaseException catch (e) {
-      print(e);
-    } catch (error) {
-      print(error);
-    }
+   
   }
 
   //uploading products in firebase
 Future<void> addNewProduct(Map productdata, File image, File url, File audio) async {
+
+    var productid ;
     var pathimage = image.toString();
     var temp = pathimage.lastIndexOf('/');
     var result = pathimage.substring(temp + 1);
@@ -93,14 +71,16 @@ Future<void> addNewProduct(Map productdata, File image, File url, File audio) as
         "product_upload_date": productdata['p_upload_date'],
         "product_description":productdata['p_description'],
         "product_category": productdata['p_category'],
+        "product_writtenby":productdata['p_uploader'],
         'product_image': imageUrl,
         'product_pdf': pickedurl,
         'product_audio': pickedaudio,
         "product_id":productid,
-      });  
-      productid =response.id;
+      });
+      productid=response.id;
       print(productid);
       CommanDialog.hideLoading();
+      update();
       Get.back();
     } catch (exception) {
       CommanDialog.hideLoading();
@@ -126,6 +106,7 @@ Future<void> getAllProduct() async {
             print(result.data());
             lodadedProduct.add(
               Product(
+                productuploader: result['product_writtenby'],
                  productpdf: result['product_pdf'],
                   productname: result['product_name'],
                   productimage: result['product_image'],
@@ -142,7 +123,6 @@ Future<void> getAllProduct() async {
       allProduct.addAll(lodadedProduct);
       update();
       CommanDialog.hideLoading();
-      
     } on FirebaseException catch (e) {
       CommanDialog.hideLoading();
       print("Error $e");

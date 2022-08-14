@@ -7,6 +7,7 @@ class Product {
   final String productcategory;
   final String productaudio;
   final String productid;
+  final String productuploader;
   Product(
       {required this.productname,
       required this.productuploaddate,
@@ -16,6 +17,7 @@ class Product {
       required this.productcategory,
       required this.productaudio,
       required this.productid,
+      required this.productuploader,
       });
 }
 
