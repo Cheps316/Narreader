@@ -182,8 +182,7 @@ class _AddProductState extends State<AddProduct> {
                       return 'should not be empty';
                     }
                     return null;
-                  },
-                  // value:categories[0].name, 
+                  }, 
                   hint: Text('Select Category'),
                   items: categories
                   .map((e) => DropdownMenuItem(value: e.name, child: Text(e.name),))

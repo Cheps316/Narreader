@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
       routes: {
         ProductsCategories.id :(context)=>  ProductsCategories(),
         ProductsDetailsPage.id:(context)=> ProductsDetailsPage(),
+        
       },
     home: LoginScreen(),
     ));

@@ -29,7 +29,7 @@ String? bookmarkaudio,
   }
 
   List<Product> bookmark =[];
-getFavorite()async{
+ void getFavorite()async{
   List<Product> newList=[];
  QuerySnapshot value =await FirebaseFirestore.instance
  .collection("bookmark")
@@ -53,7 +53,7 @@ getFavorite()async{
     bookmark = newList;
     notifyListeners();
 }
-List<Product> get getBookmark{
+ List<Product> get getFavoriteList{
   return bookmark;
 }
 }

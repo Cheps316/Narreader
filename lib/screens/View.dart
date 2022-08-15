@@ -7,21 +7,24 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 class View extends StatefulWidget {
   final file;
   final fileaudio;
+  final productname;
  
-  View({this.file,this.fileaudio});
+  View({this.file,this.fileaudio, this.productname});
 
   @override
-  State<View> createState() => _ViewState(file,fileaudio);
+  State<View> createState() => _ViewState(file,fileaudio,productname);
 }
 
 class _ViewState extends State<View> {
 
 
-  _ViewState(this.file,this.fileaudio);
+  _ViewState(this.file,this.fileaudio,this.productname);
   final file;
   final fileaudio;
-
+  final productname;
   late AudioPlayer advancedPlayer;
+
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
   @override
  
@@ -33,7 +36,7 @@ class _ViewState extends State<View> {
 
 final double screenWidth=MediaQuery.of(context).size.width;
     return Scaffold(appBar: AppBar(
-      title: Text("pdf",textAlign: TextAlign.center),
+      title: Text(productname,textAlign: TextAlign.center),
 
     ),
       body:
@@ -44,6 +47,10 @@ final double screenWidth=MediaQuery.of(context).size.width;
           SfPdfViewer.network(
           file,
           pageLayoutMode:PdfPageLayoutMode.single,
+          enableDoubleTapZooming: true,
+          key: _pdfViewerKey,
+            canShowScrollHead: true,
+              canShowScrollStatus: true,
           ),
         ),
      

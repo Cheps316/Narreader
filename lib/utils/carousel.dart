@@ -20,7 +20,7 @@ List caoursel = [
   ),
   CarouselItems(
     images:
-        'https://cdn.pixabay.com/photo/2015/12/06/18/28/capsules-1079838_960_720.jpg',
+        'https://image.slidesharecdn.com/thrillergenre-141005134450-conversion-gate01/85/thriller-genre-1-320.jpg?cb=1412606265',
     text: 'Thriller',
   ),
   CarouselItems(

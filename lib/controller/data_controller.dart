@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-import 'package:narreader_app/model/user_model.dart';
 
 import '../model/product_model.dart';
 import 'comman_dialog.dart';
@@ -18,8 +17,6 @@ class DataController extends GetxController {
 
   List<Product> allProduct =[];
    
-
-
   void onReady() {
     super.onReady();
     getAllProduct();

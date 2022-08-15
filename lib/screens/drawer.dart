@@ -6,7 +6,6 @@ import 'package:narreader_app/controller/data_controller.dart';
 import 'package:narreader_app/model/user_model.dart';
 import 'package:narreader_app/screens/category.dart';
 
-import 'bookmarks.dart';
 import 'login-screen.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -44,27 +43,25 @@ void initState(){
               Container(
                 decoration:
                     BoxDecoration(color: Theme.of(context).primaryColor),
-                height: 80,
+                height: 100,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                        'User : ${loggedInUser.name}',
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    FittedBox(
-                      child: Text(
+                          color: Colors.white, fontWeight: FontWeight.bold,fontSize: 20),
+                    ),    
+                      Text(
                         'Email : ${loggedInUser.email}',
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Colors.white, fontWeight: FontWeight.bold,fontSize: 20),
                       ),
-                    ),
                   ],
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.person),
+                leading: Icon(Icons.category),
                 title: const Text('Categories'),
                 onTap: () {
                 Get.back();

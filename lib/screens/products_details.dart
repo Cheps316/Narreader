@@ -33,6 +33,7 @@ class _ProductsDetailsPageState extends State<ProductsDetailsPage> {
     }
      );
   }
+
   @override
   Widget build(BuildContext context) {
      BookmarkProvider bookmarkProvider = Provider.of(context);
@@ -108,14 +109,17 @@ class _ProductsDetailsPageState extends State<ProductsDetailsPage> {
                  children: [
                   Row(
                     children: [
-                      Text("Written by : " +writtenby,style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
+                      Text("Written by : " +writtenby,style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
                     ],
                   ),
                    Padding(
-                     padding: const EdgeInsets.all(8.0),
+                     padding: const EdgeInsets.only(top: 20),
                      child: Row(
                        children: [
-                         Text(description,style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
+                         Flexible(
+                           child: Text(description,style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),maxLines: 5,
+                           ),
+                         ),
                        ],
                      ),
                    ),
@@ -132,18 +136,10 @@ class _ProductsDetailsPageState extends State<ProductsDetailsPage> {
                 minWidth: double.infinity,
                 onPressed: (() {
                 Navigator.push(context, 
-                MaterialPageRoute(builder: ((context) => View(file: pdf,fileaudio:audio))));
+                MaterialPageRoute(builder: ((context) => View(file: pdf,fileaudio:audio, productname:name))));
               }),
               child: Text("Read"),
                 color: Colors.blue),
-              //    MaterialButton(
-              //   minWidth: double.infinity,
-              //   onPressed: (() {
-              //   Navigator.push(context, 
-              //   MaterialPageRoute(builder: ((context) => (file: pdf,fileaudio:audio))));
-              // }),
-              // child: Text("Listen"),
-              //   color: Colors.blue),
             ],
           ),
         ),
