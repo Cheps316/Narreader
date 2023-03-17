@@ -1,4 +1,4 @@
-# foodybite_app
+# narreader_app
 
 A new Flutter project.
 
